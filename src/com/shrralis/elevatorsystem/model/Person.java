@@ -1,4 +1,4 @@
-package com.shrralis.elevator_system.model;
+package com.shrralis.elevatorsystem.model;
 
 public class Person {
     private Integer currFloor;
@@ -31,7 +31,7 @@ public class Person {
     public static class Builder {
         private Person p;
 
-        {
+        public Builder() {
             p = new Person();
         }
 

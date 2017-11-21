@@ -1,4 +1,4 @@
-package com.shrralis.elevator_system.model;
+package com.shrralis.elevatorsystem.model;
 
 import java.util.Arrays;
 
@@ -7,11 +7,15 @@ public class Elevator {
     private State state;
     private Integer currFloor;
     private Integer destFloor;
+    private Integer slotMaxAmount;
+    private Integer slotBusyAmount;
 
-    {
+    public Elevator() {
         id = 0;
         state = State.STANDBY;
         currFloor = 0;
+        slotMaxAmount = 5;
+        slotBusyAmount = 0;
     }
 
     public Integer getId() {
@@ -36,6 +40,11 @@ public class Elevator {
 
     public void setCurrFloor(Integer currFloor) {
         this.currFloor = currFloor;
+
+        if (currFloor != null && destFloor != null) {
+            state = (currFloor > destFloor ? State.DOWN :
+                    (currFloor < destFloor ? State.UP : State.STANDBY));
+        }
     }
 
     public Integer getDestFloor() {
@@ -44,14 +53,47 @@ public class Elevator {
 
     public void setDestFloor(Integer destFloor) {
         this.destFloor = destFloor;
+
+        if (currFloor != null && destFloor != null) {
+            state = (currFloor > destFloor ? State.DOWN :
+                    (currFloor < destFloor ? State.UP : State.STANDBY));
+        }
+
+    }
+
+    public Integer getSlotMaxAmount() {
+        return slotMaxAmount;
+    }
+
+    public void setSlotMaxAmount(Integer slotMaxAmount) {
+        this.slotMaxAmount = slotMaxAmount;
+
+        if (slotMaxAmount < slotBusyAmount) {
+            slotBusyAmount = 0;
+        }
+    }
+
+    public Integer getSlotBusyAmount() {
+        return slotBusyAmount;
+    }
+
+    public void setSlotBusyAmount(Integer slotBusyAmount) {
+        this.slotBusyAmount = slotBusyAmount;
+
+        if (slotMaxAmount < slotBusyAmount) {
+            slotMaxAmount = slotBusyAmount;
+        }
     }
 
     @Override
     public String toString() {
         return "Elevator{" +
-                "state=" + state +
+                "id=" + id +
+                ", state=" + state +
                 ", currFloor=" + currFloor +
                 ", destFloor=" + destFloor +
+                ", slotMaxAmount=" + slotMaxAmount +
+                ", slotBusyAmount=" + slotBusyAmount +
                 '}';
     }
 
@@ -71,33 +113,32 @@ public class Elevator {
     public static class Builder {
         private Elevator elevator;
 
-        {
+        public Builder() {
             elevator = new Elevator();
         }
 
         public Builder setId(Integer id) {
-            elevator.id = id;
-
+            elevator.setId(id);
             return this;
         }
 
         public Builder setCurrFloor(Integer floor) {
-            elevator.currFloor = floor;
-
-            if (elevator.currFloor != null && elevator.destFloor != null) {
-                elevator.state = (elevator.currFloor > elevator.destFloor ? State.DOWN :
-                        (elevator.currFloor < elevator.destFloor ? State.UP : State.STANDBY));
-            }
+            elevator.setCurrFloor(floor);
             return this;
         }
 
         public Builder setDestFloor(Integer floor) {
-            elevator.destFloor = floor;
+            elevator.setDestFloor(floor);
+            return this;
+        }
 
-            if (elevator.currFloor != null && elevator.destFloor != null) {
-                elevator.state = (elevator.currFloor > elevator.destFloor ? State.DOWN :
-                        (elevator.currFloor < elevator.destFloor ? State.UP : State.STANDBY));
-            }
+        public Builder setSlotMaxAmount(Integer maxAmount) {
+            elevator.setSlotMaxAmount(maxAmount);
+            return this;
+        }
+
+        public Builder setSlotBusyAmount(Integer busyAmount) {
+            elevator.setSlotBusyAmount(busyAmount);
             return this;
         }
 

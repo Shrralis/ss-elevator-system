@@ -1,8 +1,8 @@
 package test;
 
-import com.shrralis.elevator_system.main.Main;
-import com.shrralis.elevator_system.model.Elevator;
-import com.shrralis.elevator_system.model.Person;
+import com.shrralis.elevatorsystem.main.Main;
+import com.shrralis.elevatorsystem.model.Elevator;
+import com.shrralis.elevatorsystem.model.Person;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
@@ -246,6 +246,26 @@ public class ElevatorSystemTest {
                                         .build()
                         ),
                         2
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(6)
+                                .setDestFloor(3)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(4)
+                                        .setDestFloor(4)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(6)
+                                        .setDestFloor(4)
+                                        .setSlotBusyAmount(5)
+                                        .build()
+                        ),
+                        1
                 },
         };
     }
