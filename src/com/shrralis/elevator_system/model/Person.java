@@ -27,4 +27,28 @@ public class Person {
                 ", destFloor=" + destFloor +
                 '}';
     }
+
+    public static class Builder {
+        private Person p;
+
+        {
+            p = new Person();
+        }
+
+        public Builder setCurrFloor(Integer floor) {
+            p.currFloor = floor;
+
+            return this;
+        }
+
+        public Builder setDestFloor(Integer floor) {
+            p.destFloor = floor;
+
+            return this;
+        }
+
+        public Person build() {
+            return p;
+        }
+    }
 }
