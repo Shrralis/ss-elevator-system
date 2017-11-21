@@ -11,14 +11,13 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(DataProviderRunner.class)
 public class ElevatorSystemTest {
-    private int elevatorAmount = 0;
-
     @DataProvider
-    public static Object[][] dataTest1() {
+    public static Object[][] dataForGetElevatorPositive() {
         return new Object[][]{
                 {
                         new Person.Builder()
@@ -191,17 +190,74 @@ public class ElevatorSystemTest {
                         ),
                         2
                 },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(5)
+                                .setDestFloor(9)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(7)
+                                        .setDestFloor(7)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(3)
+                                        .setDestFloor(3)
+                                        .build()
+                        ),
+                        1
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(8)
+                                .setDestFloor(4)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(7)
+                                        .setDestFloor(6)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(4)
+                                        .setDestFloor(5)
+                                        .build()
+                        ),
+                        1
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(6)
+                                .setDestFloor(3)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(4)
+                                        .setDestFloor(4)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(6)
+                                        .setDestFloor(4)
+                                        .build()
+                        ),
+                        2
+                },
         };
     }
 
     @Test
-    @UseDataProvider("dataTest1")
-    public void test1(Person person, List<Elevator> elevators, Integer resultElevatorId) {
+    @UseDataProvider("dataForGetElevatorPositive")
+    public void getElevatorPositive(Person person, List<Elevator> elevators, Integer resultElevatorId) {
         assertTrue(Main.calcMostProductElevator(elevators, person).getId() == resultElevatorId);
     }
 
     @Test
-    public void test2() {
+    public void nullResultPositive() {
         Person p = new Person();
 
         p.setCurrFloor(5);
@@ -220,6 +276,6 @@ public class ElevatorSystemTest {
                         .build()
         );
 
-        assertTrue(Main.calcMostProductElevator(elevators, p) == null);
+        assertNull(Main.calcMostProductElevator(elevators, p));
     }
 }

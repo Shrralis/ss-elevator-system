@@ -3,15 +3,12 @@ package com.shrralis.elevator_system.main;
 import com.shrralis.elevator_system.model.Elevator;
 import com.shrralis.elevator_system.model.Person;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
     private static int elevatorAmount = 1;
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         List<Elevator> elevators = new ArrayList<>();
         Integer count = null;
 
@@ -52,9 +49,9 @@ public class Main {
         } else {
             System.out.printf("You will get %d elevator!\n", result.getId());
         }
-    }
+    }*/
 
-    private static Elevator fillNewElevator() throws IOException {
+    /*private static Elevator fillNewElevator() throws IOException {
         Elevator elevator = new Elevator();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Integer floor;
@@ -102,7 +99,7 @@ public class Main {
         } while (destFloor == null);
         person.setDestFloor(destFloor);
         return person;
-    }
+    }*/
 
     public static Elevator calcMostProductElevator(List<Elevator> elevators, Person p) {
         Map<Elevator, Integer> minDistances = new HashMap<>();
@@ -117,7 +114,11 @@ public class Main {
 
             elevatorSortedByMinDistance = new LinkedList<>(minDistances.entrySet());
 
-            Collections.sort(elevatorSortedByMinDistance, Comparator.comparing(Map.Entry::getValue));
+            Collections.sort(elevatorSortedByMinDistance, ((o1, o2) -> {
+                int firstComparation = o1.getValue().compareTo(o2.getValue());
+
+                return firstComparation == 0 ? o1.getKey().getId().compareTo(o2.getKey().getId()) : firstComparation;
+            }));
 
             result = elevatorSortedByMinDistance.get(0).getKey();
         } else if (p.getDestFloor() < p.getCurrFloor()) {
@@ -128,7 +129,11 @@ public class Main {
 
             elevatorSortedByMinDistance = new LinkedList<>(minDistances.entrySet());
 
-            Collections.sort(elevatorSortedByMinDistance, Comparator.comparing(Map.Entry::getValue));
+            Collections.sort(elevatorSortedByMinDistance, ((o1, o2) -> {
+                int firstComparation = o1.getValue().compareTo(o2.getValue());
+
+                return firstComparation == 0 ? o1.getKey().getId().compareTo(o2.getKey().getId()) : firstComparation;
+            }));
 
             result = elevatorSortedByMinDistance.get(0).getKey();
         }
