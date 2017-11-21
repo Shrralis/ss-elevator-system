@@ -106,7 +106,7 @@ public class Main {
 
     public static Elevator calcMostProductElevator(List<Elevator> elevators, Person p) {
         Map<Elevator, Integer> minDistances = new HashMap<>();
-        List<Map.Entry<Elevator, Integer>> elevatorSortedByMinDistanceDesc;
+        List<Map.Entry<Elevator, Integer>> elevatorSortedByMinDistance;
         Elevator result = null;
 
         if (p.getDestFloor() > p.getCurrFloor()) {
@@ -115,22 +115,22 @@ public class Main {
                 minDistances.put(e, calcMinDistanceOnUp(e, p));
             }
 
-            elevatorSortedByMinDistanceDesc = new LinkedList<>(minDistances.entrySet());
+            elevatorSortedByMinDistance = new LinkedList<>(minDistances.entrySet());
 
-            Collections.sort(elevatorSortedByMinDistanceDesc, Comparator.comparing(Map.Entry::getValue));
+            Collections.sort(elevatorSortedByMinDistance, Comparator.comparing(Map.Entry::getValue));
 
-            result = elevatorSortedByMinDistanceDesc.get(0).getKey();
+            result = elevatorSortedByMinDistance.get(0).getKey();
         } else if (p.getDestFloor() < p.getCurrFloor()) {
             // person wanna down
             for (Elevator e : elevators) {
                 minDistances.put(e, calcMinDistanceOnDown(e, p));
             }
 
-            elevatorSortedByMinDistanceDesc = new LinkedList<>(minDistances.entrySet());
+            elevatorSortedByMinDistance = new LinkedList<>(minDistances.entrySet());
 
-            Collections.sort(elevatorSortedByMinDistanceDesc, Comparator.comparing(Map.Entry::getValue));
+            Collections.sort(elevatorSortedByMinDistance, Comparator.comparing(Map.Entry::getValue));
 
-            result = elevatorSortedByMinDistanceDesc.get(0).getKey();
+            result = elevatorSortedByMinDistance.get(0).getKey();
         }
         return result;
     }
@@ -148,8 +148,10 @@ public class Main {
             }
         } else if (e.getState().equals(Elevator.State.DOWN)) {
             result = (e.getCurrFloor() - e.getDestFloor()) +
-                    (p.getCurrFloor() - e.getDestFloor()) +
-                    (p.getDestFloor() - p.getCurrFloor());
+                    (p.getDestFloor() - p.getCurrFloor()) +
+                    (p.getCurrFloor() > e.getCurrFloor() ?
+                            p.getCurrFloor() - e.getDestFloor() :
+                            e.getDestFloor() - p.getCurrFloor());
         } else {
             if (e.getCurrFloor() <= p.getCurrFloor()) {
                 result = p.getDestFloor() - e.getCurrFloor();
@@ -174,8 +176,10 @@ public class Main {
             }
         } else if (e.getState().equals(Elevator.State.UP)) {
             result = (e.getDestFloor() - e.getCurrFloor()) +
-                    (e.getDestFloor() - p.getCurrFloor()) +
-                    (p.getCurrFloor() - p.getDestFloor());
+                    (p.getCurrFloor() - p.getDestFloor()) +
+                    (e.getDestFloor() > p.getCurrFloor() ?
+                            e.getDestFloor() - p.getCurrFloor() :
+                            p.getCurrFloor() - e.getDestFloor());
         } else {
             if (e.getCurrFloor() >= p.getCurrFloor()) {
                 result = e.getCurrFloor() - p.getDestFloor();

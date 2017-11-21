@@ -75,8 +75,122 @@ public class ElevatorSystemTest {
                                         .setDestFloor(3)
                                         .build()
                         ),
+                        2
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(7)
+                                .setDestFloor(3)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(4)
+                                        .setDestFloor(5)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(6)
+                                        .setDestFloor(7)
+                                        .build()
+                        ),
+                        2
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(5)
+                                .setDestFloor(9)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(4)
+                                        .setDestFloor(5)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(7)
+                                        .setDestFloor(6)
+                                        .build()
+                        ),
                         1
-                }
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(7)
+                                .setDestFloor(2)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(8)
+                                        .setDestFloor(3)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(9)
+                                        .setDestFloor(1)
+                                        .build()
+                        ),
+                        1
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(6)
+                                .setDestFloor(4)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(8)
+                                        .setDestFloor(3)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(2)
+                                        .setDestFloor(4)
+                                        .build()
+                        ),
+                        1
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(6)
+                                .setDestFloor(2)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(5)
+                                        .setDestFloor(12)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(5)
+                                        .setDestFloor(8)
+                                        .build()
+                        ),
+                        2
+                },
+                {
+                        new Person.Builder()
+                                .setCurrFloor(4)
+                                .setDestFloor(9)
+                                .build(),
+                        List.of(
+                                new Elevator.Builder()
+                                        .setId(1)
+                                        .setCurrFloor(10)
+                                        .setDestFloor(12)
+                                        .build(),
+                                new Elevator.Builder()
+                                        .setId(2)
+                                        .setCurrFloor(3)
+                                        .setDestFloor(1)
+                                        .build()
+                        ),
+                        2
+                },
         };
     }
 
