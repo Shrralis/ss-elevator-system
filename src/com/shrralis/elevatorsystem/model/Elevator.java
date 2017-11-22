@@ -44,8 +44,7 @@ public class Elevator {
         this.currFloor = currFloor;
 
         if (currFloor != null && destFloor != null) {
-            state = (currFloor > destFloor ? State.DOWN :
-                    (currFloor < destFloor ? State.UP : State.STANDBY));
+            defineState();
         }
     }
 
@@ -57,8 +56,7 @@ public class Elevator {
         this.destFloor = destFloor;
 
         if (currFloor != null && destFloor != null) {
-            state = (currFloor > destFloor ? State.DOWN :
-                    (currFloor < destFloor ? State.UP : State.STANDBY));
+            defineState();
         }
     }
 
@@ -68,7 +66,7 @@ public class Elevator {
 
     public void setMaxCapacity(Integer maxCapacity) {
         if (maxCapacity < 0) {
-            throw new RuntimeException("Busy slots cannot be less than 0!");
+            throw new IllegalArgumentException("Max capacity cannot be less than 0!");
         } else if (maxCapacity < busySlots) {
             busySlots = 0;
         } else {
@@ -82,9 +80,9 @@ public class Elevator {
 
     public void setBusySlots(Integer busySlots) {
         if (busySlots > maxCapacity) {
-            throw new RuntimeException("Busy slots cannot be more than elevator capacity!");
+            throw new IllegalArgumentException("Busy slots cannot be more than elevator capacity!");
         } else if (busySlots < 0) {
-            throw new RuntimeException("Busy slots cannot be less than 0!");
+            throw new IllegalArgumentException("Busy slots cannot be less than 0!");
         } else {
             this.busySlots = busySlots;
         }
@@ -94,7 +92,7 @@ public class Elevator {
         if (busySlots < maxCapacity) {
             this.busySlots++;
         } else {
-            throw new RuntimeException("Busy slots cannot be more than elevator capacity!");
+            throw new ArithmeticException("Busy slots cannot be more than elevator capacity!");
         }
     }
 
@@ -102,7 +100,7 @@ public class Elevator {
         if (busySlots > 0) {
             this.busySlots--;
         } else {
-            throw new RuntimeException("Busy slots cannot be less than 0!");
+            throw new ArithmeticException("Busy slots cannot be less than 0!");
         }
     }
 
@@ -116,6 +114,14 @@ public class Elevator {
                 ", maxCapacity=" + maxCapacity +
                 ", busySlots=" + busySlots +
                 '}';
+    }
+
+    private void defineState() {
+        if (currFloor > destFloor) {
+            state = State.DOWN;
+        } else {
+            state = currFloor < destFloor ? State.UP : State.STANDBY;
+        }
     }
 
     public enum State {

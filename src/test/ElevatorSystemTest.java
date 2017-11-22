@@ -150,7 +150,7 @@ public class ElevatorSystemTest {
                                         .setDestFloor(4)
                                         .build()
                         ),
-                        1
+                        2
                 },
                 {
                         new Person.Builder()
@@ -245,7 +245,7 @@ public class ElevatorSystemTest {
                                         .setDestFloor(4)
                                         .build()
                         ),
-                        2
+                        1
                 },
                 {
                         new Person.Builder()

@@ -21,12 +21,12 @@ public class Main {
         if (person.getDestFloor() > person.getCurrFloor()) {
             // person wanna up
             for (Elevator e : elevators) {
-                minDistances.put(e, calcMinDistanceOnUp(e, person));
+                minDistances.put(e, calcMinDistance(e, person, true));
             }
         } else if (person.getDestFloor() < person.getCurrFloor()) {
             // person wanna down
             for (Elevator e : elevators) {
-                minDistances.put(e, calcMinDistanceOnDown(e, person));
+                minDistances.put(e, calcMinDistance(e, person, false));
             }
         }
 
@@ -50,23 +50,13 @@ public class Main {
         return result;
     }
 
-    private static Integer calcMinDistanceOnUp(Elevator elevator, Person person) {
+    /*private static Integer calcMinDistanceOnUp(Elevator elevator, Person person) {
         Integer result;
 
-        if (elevator.getState().equals(Elevator.State.UP)) {
-            if (elevator.getCurrFloor() <= person.getCurrFloor()) {
-                result = person.getDestFloor() - elevator.getCurrFloor();
-            } else {
-                result = (elevator.getDestFloor() - elevator.getCurrFloor()) +
-                        (elevator.getDestFloor() - person.getCurrFloor()) +
-                        (person.getDestFloor() - person.getCurrFloor());
-            }
-        } else if (elevator.getState().equals(Elevator.State.DOWN)) {
+        if (elevator.getState().equals(Elevator.State.DOWN)) {
             result = (elevator.getCurrFloor() - elevator.getDestFloor()) +
                     (person.getDestFloor() - person.getCurrFloor()) +
-                    (person.getCurrFloor() > elevator.getCurrFloor() ?
-                            person.getCurrFloor() - elevator.getDestFloor() :
-                            elevator.getDestFloor() - person.getCurrFloor());
+                    Math.abs(person.getCurrFloor() - elevator.getDestFloor());
         } else {
             if (elevator.getCurrFloor() <= person.getCurrFloor()) {
                 result = person.getDestFloor() - elevator.getCurrFloor();
@@ -76,32 +66,27 @@ public class Main {
             }
         }
         return result;
-    }
+    }*/
 
-    private static Integer calcMinDistanceOnDown(Elevator elevator, Person person) {
+    private static Integer calcMinDistance(Elevator elevator, Person person, boolean isUp) {
         Integer result;
 
-        if (elevator.getState().equals(Elevator.State.DOWN)) {
-            if (elevator.getCurrFloor() >= person.getCurrFloor()) {
-                result = elevator.getCurrFloor() - person.getDestFloor();
+        if (elevator.getState().equals(Elevator.State.STANDBY)) {
+            if (!isUp ? elevator.getCurrFloor() >= person.getCurrFloor() :
+                    elevator.getCurrFloor() <= person.getCurrFloor()) {
+                result = Math.abs(elevator.getCurrFloor() - person.getDestFloor());
             } else {
-                result = (elevator.getCurrFloor() - elevator.getDestFloor()) +
-                        (person.getCurrFloor() - elevator.getDestFloor()) +
-                        (person.getCurrFloor() - person.getDestFloor());
+                result = Math.abs(person.getCurrFloor() - elevator.getCurrFloor()) +
+                        Math.abs(person.getCurrFloor() - person.getDestFloor());
+
+                System.out.printf("result = %d, %s\n", result, elevator.toString());
             }
-        } else if (elevator.getState().equals(Elevator.State.UP)) {
-            result = (elevator.getDestFloor() - elevator.getCurrFloor()) +
-                    (person.getCurrFloor() - person.getDestFloor()) +
-                    (elevator.getDestFloor() > person.getCurrFloor() ?
-                            elevator.getDestFloor() - person.getCurrFloor() :
-                            person.getCurrFloor() - elevator.getDestFloor());
         } else {
-            if (elevator.getCurrFloor() >= person.getCurrFloor()) {
-                result = elevator.getCurrFloor() - person.getDestFloor();
-            } else {
-                result = (person.getCurrFloor() - elevator.getCurrFloor()) +
-                        (person.getCurrFloor() - person.getDestFloor());
-            }
+            result = Math.abs(elevator.getDestFloor() - elevator.getCurrFloor()) +
+                    Math.abs(person.getCurrFloor() - person.getDestFloor()) +
+                    Math.abs(person.getCurrFloor() - elevator.getDestFloor());
+
+            System.out.printf("result = %d, %s\n", result, elevator.toString());
         }
         return result;
     }
