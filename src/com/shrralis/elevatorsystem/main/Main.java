@@ -50,24 +50,7 @@ public class Main {
         return result;
     }
 
-    /*private static Integer calcMinDistanceOnUp(Elevator elevator, Person person) {
-        Integer result;
-
-        if (elevator.getState().equals(Elevator.State.DOWN)) {
-            result = (elevator.getCurrFloor() - elevator.getDestFloor()) +
-                    (person.getDestFloor() - person.getCurrFloor()) +
-                    Math.abs(person.getCurrFloor() - elevator.getDestFloor());
-        } else {
-            if (elevator.getCurrFloor() <= person.getCurrFloor()) {
-                result = person.getDestFloor() - elevator.getCurrFloor();
-            } else {
-                result = (elevator.getCurrFloor() - person.getCurrFloor()) +
-                        (person.getDestFloor() - person.getCurrFloor());
-            }
-        }
-        return result;
-    }*/
-
+    // Simplified thanks to issues #1 and #2
     private static Integer calcMinDistance(Elevator elevator, Person person, boolean isUp) {
         Integer result;
 
@@ -78,15 +61,11 @@ public class Main {
             } else {
                 result = Math.abs(person.getCurrFloor() - elevator.getCurrFloor()) +
                         Math.abs(person.getCurrFloor() - person.getDestFloor());
-
-                System.out.printf("result = %d, %s\n", result, elevator.toString());
             }
         } else {
             result = Math.abs(elevator.getDestFloor() - elevator.getCurrFloor()) +
                     Math.abs(person.getCurrFloor() - person.getDestFloor()) +
                     Math.abs(person.getCurrFloor() - elevator.getDestFloor());
-
-            System.out.printf("result = %d, %s\n", result, elevator.toString());
         }
         return result;
     }
