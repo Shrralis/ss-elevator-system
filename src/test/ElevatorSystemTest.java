@@ -273,7 +273,7 @@ public class ElevatorSystemTest {
     @Test
     @UseDataProvider("dataForGetElevatorPositive")
     public void getElevatorPositive(Person person, List<Elevator> elevators, Integer resultElevatorId) {
-        assertEquals(Main.calcMostProductElevator(elevators, person).getId(), resultElevatorId);
+        assertEquals(resultElevatorId, Main.calcMostProductElevator(elevators, person).getId());
     }
 
     @Test
