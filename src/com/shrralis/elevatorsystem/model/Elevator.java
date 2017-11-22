@@ -3,19 +3,21 @@ package com.shrralis.elevatorsystem.model;
 import java.util.Arrays;
 
 public class Elevator {
+    public static final int DEFAULT_MAX_CAPACITY = 5;
+
     private Integer id;
     private State state;
     private Integer currFloor;
     private Integer destFloor;
-    private Integer slotMaxAmount;
-    private Integer slotBusyAmount;
+    private Integer maxCapacity;
+    private Integer busySlots;
 
     public Elevator() {
         id = 0;
         state = State.STANDBY;
         currFloor = 0;
-        slotMaxAmount = 5;
-        slotBusyAmount = 0;
+        maxCapacity = DEFAULT_MAX_CAPACITY;
+        busySlots = 0;
     }
 
     public Integer getId() {
@@ -58,30 +60,49 @@ public class Elevator {
             state = (currFloor > destFloor ? State.DOWN :
                     (currFloor < destFloor ? State.UP : State.STANDBY));
         }
-
     }
 
-    public Integer getSlotMaxAmount() {
-        return slotMaxAmount;
+    public Integer getMaxCapacity() {
+        return maxCapacity;
     }
 
-    public void setSlotMaxAmount(Integer slotMaxAmount) {
-        this.slotMaxAmount = slotMaxAmount;
-
-        if (slotMaxAmount < slotBusyAmount) {
-            slotBusyAmount = 0;
+    public void setMaxCapacity(Integer maxCapacity) {
+        if (maxCapacity < 0) {
+            throw new RuntimeException("Busy slots cannot be less than 0!");
+        } else if (maxCapacity < busySlots) {
+            busySlots = 0;
+        } else {
+            this.maxCapacity = maxCapacity;
         }
     }
 
-    public Integer getSlotBusyAmount() {
-        return slotBusyAmount;
+    public Integer getBusySlots() {
+        return busySlots;
     }
 
-    public void setSlotBusyAmount(Integer slotBusyAmount) {
-        this.slotBusyAmount = slotBusyAmount;
+    public void setBusySlots(Integer busySlots) {
+        if (busySlots > maxCapacity) {
+            throw new RuntimeException("Busy slots cannot be more than elevator capacity!");
+        } else if (busySlots < 0) {
+            throw new RuntimeException("Busy slots cannot be less than 0!");
+        } else {
+            this.busySlots = busySlots;
+        }
+    }
 
-        if (slotMaxAmount < slotBusyAmount) {
-            slotMaxAmount = slotBusyAmount;
+    public void increaseBusySlots() {
+        if (busySlots < maxCapacity) {
+            this.busySlots++;
+        } else {
+            throw new RuntimeException("Busy slots cannot be more than elevator capacity!");
+        }
+    }
+
+    public void decreaseBusySlots() {
+        if (busySlots > 0) {
+            this.busySlots--;
+        } else {
+            throw new RuntimeException("Busy slots cannot be less than 0!");
         }
     }
 
@@ -92,8 +113,8 @@ public class Elevator {
                 ", state=" + state +
                 ", currFloor=" + currFloor +
                 ", destFloor=" + destFloor +
-                ", slotMaxAmount=" + slotMaxAmount +
-                ", slotBusyAmount=" + slotBusyAmount +
+                ", maxCapacity=" + maxCapacity +
+                ", busySlots=" + busySlots +
                 '}';
     }
 
@@ -132,13 +153,13 @@ public class Elevator {
             return this;
         }
 
-        public Builder setSlotMaxAmount(Integer maxAmount) {
-            elevator.setSlotMaxAmount(maxAmount);
+        public Builder setMaxCapacity(Integer maxCapacity) {
+            elevator.setMaxCapacity(maxCapacity);
             return this;
         }
 
-        public Builder setSlotBusyAmount(Integer busyAmount) {
-            elevator.setSlotBusyAmount(busyAmount);
+        public Builder setBusySlots(Integer busySlots) {
+            elevator.setBusySlots(busySlots);
             return this;
         }
 

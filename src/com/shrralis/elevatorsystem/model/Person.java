@@ -29,26 +29,26 @@ public class Person {
     }
 
     public static class Builder {
-        private Person p;
+        private Person person;
 
         public Builder() {
-            p = new Person();
+            person = new Person();
         }
 
         public Builder setCurrFloor(Integer floor) {
-            p.currFloor = floor;
+            person.currFloor = floor;
 
             return this;
         }
 
         public Builder setDestFloor(Integer floor) {
-            p.destFloor = floor;
+            person.destFloor = floor;
 
             return this;
         }
 
         public Person build() {
-            return p;
+            return person;
         }
     }
 }

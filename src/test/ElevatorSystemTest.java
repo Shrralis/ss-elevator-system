@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(DataProviderRunner.class)
 public class ElevatorSystemTest {
@@ -262,7 +262,7 @@ public class ElevatorSystemTest {
                                         .setId(2)
                                         .setCurrFloor(6)
                                         .setDestFloor(4)
-                                        .setSlotBusyAmount(5)
+                                        .setBusySlots(5)
                                         .build()
                         ),
                         1
@@ -273,7 +273,7 @@ public class ElevatorSystemTest {
     @Test
     @UseDataProvider("dataForGetElevatorPositive")
     public void getElevatorPositive(Person person, List<Elevator> elevators, Integer resultElevatorId) {
-        assertTrue(Main.calcMostProductElevator(elevators, person).getId() == resultElevatorId);
+        assertEquals(Main.calcMostProductElevator(elevators, person).getId(), resultElevatorId);
     }
 
     @Test
